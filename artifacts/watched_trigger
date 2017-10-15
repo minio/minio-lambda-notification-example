@@ -1,0 +1,4 @@
+create
+    trigger watched_table_trigger after update
+        on
+        bucketevents for each row execute procedure notify_trigger()

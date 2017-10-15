@@ -1,0 +1,18 @@
+CREATE OR REPLACE FUNCTION public.notify_trigger()
+ RETURNS trigger
+ LANGUAGE plpgsql
+AS $function$
+declare
+ 	data json;
+    notification json;
+BEGIN
+  	data = row_to_json(NEW);
+	notification = json_build_object(
+                          'table',TG_TABLE_NAME,
+                          'data', data);
+        
+	PERFORM pg_notify('watchers', notification::text );
+  RETURN new;
+END;
+$function$
+
