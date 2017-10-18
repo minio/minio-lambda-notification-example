@@ -41,16 +41,10 @@ func waitForNotification(minioClient *minio.Client, l *pq.Listener) {
 				fmt.Println("Error processing JSON: ", jerr)
 				return
 			}
-			fmt.Println("==================")
-			fmt.Println(record.Data.Value.Records[0].S3.Bucket.Name)
+
 			output.Key = record.Data.Value.Records[0].S3.Bucket.Name
 			output.Value = record.Data.Value.Records[0].S3.Object.Key
-
-			fmt.Println(":")
-			fmt.Println(record.Data.Value.Records[0].S3.Object.Key)
 			output.Parsed = processOCR(minioClient, record.Data.Value.Records[0].S3.Bucket.Name, record.Data.Value.Records[0].S3.Object.Key)
-			fmt.Println(output.Parsed)
-			fmt.Println("==================")
 
 			var prettyJSON bytes.Buffer
 			err := json.Indent(&prettyJSON, []byte(n.Extra), "", "\t")
@@ -58,7 +52,8 @@ func waitForNotification(minioClient *minio.Client, l *pq.Listener) {
 				fmt.Println("Error processing JSON: ", err)
 				return
 			}
-			fmt.Println(string(prettyJSON.Bytes()))
+
+			output.Metadata = string(prettyJSON.Bytes())
 			return
 		case <-time.After(90 * time.Second):
 			fmt.Println("Received no events for 90 seconds, checking connection")

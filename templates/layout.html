@@ -5,64 +5,61 @@
   <link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css">
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.6.1/css/font-awesome.min.css">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/dropzone/5.2.0/dropzone.css" />
+  <link href="https://fonts.googleapis.com/css?family=Roboto:400,500" rel="stylesheet">
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/material-design-iconic-font/2.2.0/css/material-design-iconic-font.css" rel="stylesheet">
+  <link rel="stylesheet" href="/assets/css/normalize.css">
+  <link rel="stylesheet" href="/assets/css/dropzone.css">
+  <link rel="stylesheet" href="/assets/css/style.css"> 
 </head>
     <body>
-        <nav class="navbar navbar-default navbar-fixed-top" role="navigation"  style="background-color: #ffffff; ">
-            <div class="container">
-                <!-- Brand and toggle get grouped for better mobile display -->
-                <div class="navbar-header">
-                    <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
-                        <span class="sr-only">Toggle navigation</span>
-                        <span class="icon-bar"></span>
-                        <span class="icon-bar"></span>
-                        <span class="icon-bar"></span>
-                    </button>
-                    <!-- <a class="navbar-brand" href="#" style="background-color: rgb(63, 63, 63);;">
-                      <i class="fa fa-tint fa-lg" style="color: rgb(255, 254, 254);;"></i>
-                    </a> -->
-                </div>
-                <!-- Collect the nav links, forms, and other content for toggling -->
-                <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
-                    <ul class="nav navbar-nav pull-right">
-                        <li>
-                        <a href="#" style="color: rgb(63, 63, 63);">Github</a>
-                        </li>
-                        <li>
-                            <a href="#" style="color: rgb(63, 63, 63);">Arch</a>
-                        </li>
-                    </ul>
-                </div>
-                <!-- /.navbar-collapse -->
+        <header class="header">
+            <div class="container header__inner">
+                <a class="logo" href="/index.html">TRICHORDER
+                   <!--  <img src="/assets/img/logo.svg" alt=""> -->
+                </a>
+
+                <nav class="links">
+                    
+                    <a href="https://docs.google.com/presentation/d/e/2PACX-1vRO4mihwhxwrUhY3Ft5GfjdjpecnrbPmx3CE_xACnMWqdVjnSAK5m5eiNZtWMGc0SoldWR1a0-YE0Go/pub?start=false&loop=false&delayms=3000&slide=id.g28b1a709d5_0_0">Arch</a>
+                    <a href="https://github.com/minio/minio-lambda-notification-example">Source</a>
+                </nav>
             </div>
-            <!-- /.container -->
-        </nav>
-        <div class="container-fluid" style="margin-top:100px;">
-            
-                <textarea rows="100" cols="170" id="term" style="color: rgb(66, 64, 64); border: none; 
-                background-color:rgb(255, 255, 255); height: 200px; max-height: 200px; resize: none;"></textarea>
-            
-                <form action="/upload" method="POST" class="dropzone" id="my-dropzone" 
-                    style="height: 350px; border: none;" >
-                    <div class="fallback">
-                        <input name="file" type="file" multiple />
-                        <input type="submit" value="Upload" />
+        </header>
+        <div class="container">
+                <div class="content">
+                    <form class="dropzone"></form>
+    
+                    <input class="json-text" type="hidden" value='' id="term">
+    
+    
+                    <div class="text">
+                        <textarea class="text__input"></textarea>
+    
+                        <div class="actions">
+                            <a class="text__clear" href=""><i class="zmdi zmdi-close-circle-o"></i> <span>Clear</span></a>
+                            <a class="text__debug" href=""><i class="zmdi zmdi-bug"></i> <span>Debug</span></a>
+                        </div>
                     </div>
-                </form>
-            
-           
-             
-        </div>
-        <script src="https://cdnjs.cloudflare.com/ajax/libs/dropzone/5.2.0/dropzone.js"></script>
-        <script
-        src="https://code.jquery.com/jquery-1.12.4.min.js"
-        integrity="sha256-ZosEbRLbNQzLpnKIkEdrPv7lOy9C27hHQ+Xp8a4MxAQ="
-        crossorigin="anonymous"></script>
-      
+    
+                    <div class="debug">
+                        <textarea class="debug__input"></textarea>
+    
+                        <div class="actions">
+                            <a class="debug__close" href=""><i class="zmdi zmdi-close"></i> <span>Close</span></a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
         
-         <script>
+        <script src="/assets/js/jquery-3.2.1.min.js"></script>
+        <script src="/assets/js/dropzone.js"></script>
+        <script src="/assets/js/autosize.min.js"></script>
+        <script src="/assets/js/functions.js"></script>
+        
+        <!-- <script>
                 Dropzone.options.myDropzone = {
                     success: function(file, response){
-                        alert("Hey");
                         $.ajax({
                             url: "/results",
                             success: function(data){
@@ -72,6 +69,7 @@
                         });
                     }
                 };
-            </script>
+        </script> -->
+         
     </body>
 </html>
