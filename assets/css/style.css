@@ -208,3 +208,49 @@ textarea {
     padding: 30px;
     box-shadow: 0 0 50px rgba(0,0,0,0.1);
 }
+.actions {
+    text-align: center;
+    padding: 20px; }
+    .actions > a {
+      display: inline-block;
+      padding: 8px 15px 7px;
+      text-transform: uppercase;
+      border: 1px solid #dfdfdf;
+      border-radius: 2px;
+      color: #8C8C8C;
+      transition: background-color 300ms, color 300ms;
+      -webkit-transition: background-color 300ms, color 300ms;
+      -moz-transition: background-color 300ms, color 300ms;
+      margin: 0 1px; }
+      .actions > a > i, .actions > a > span {
+        vertical-align: middle; }
+      .actions > a > i {
+        font-size: 20px;
+        margin: 0 5px 0 0;
+        line-height: 100%; }
+        .actions > a > i:hover {
+          background-color: #fff;
+          color: #7a7a7a; }
+.modal-content {
+    border: 0;
+    border-radius: 2px; }
+
+  .modal-body {
+    padding: 20px; }
+
+  .modal-footer {
+    padding-top: 0;
+    border: 0;
+    text-align: center; }
+
+  .table {
+    background-color: #fff; }
+
+  .data-table__search {
+    width: 100%;
+    margin-bottom: 30px;
+    height: 45px;
+    padding: 15px;
+    border: 1px solid #e9ecef; }
+
+  /*# sourceMappingURL=style.css.map */

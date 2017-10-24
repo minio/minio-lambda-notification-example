@@ -14,12 +14,17 @@ $(document).ready(function () {
         },
        "columns": [
             { "data": "Key" },
-            { "data": "Value" },
-            { "data": "Parsed"},
-            { "data": "Metadata"}
-        ]
+            { "data": "Value" }
+        ],
+       // "sDom": '<"dataTables__top"lfB>rt<"dataTables__bottom"p><"clear">',
+        "sDom": 't',
+        "bFilter":false,
+        "searching":true
     });
-
+    var oTable = $('#minio-data').DataTable();
+    $('#search-inp').on('keyup',function(){
+        oTable.search($(this).val()).draw();
+    });
     //Dropzone
     if($('.dropzone')[0]) {
         $('.dropzone').dropzone({
@@ -62,10 +67,8 @@ $(document).ready(function () {
                 full_data = JSON.stringify(data.Metadata);
                 res_data = JSON.stringify(data.Parsed);
                 $('.text__input').val($.parseJSON(res_data));
-                
-                
+                oTable.draw();
             }
-           
         });
     }, 600); 
     // Autosize
@@ -82,10 +85,7 @@ $(document).ready(function () {
 
     $('body').on('click', '.debug__close', function (e) {
         e.preventDefault();
-
         $('.debug').removeClass('debug--active');
     });
-
-
 });
 

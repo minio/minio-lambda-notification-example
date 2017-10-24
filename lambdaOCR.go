@@ -7,7 +7,6 @@ import (
 	"os"
 
 	barcode "github.com/bieber/barcode"
-
 	minio "github.com/minio/minio-go"
 	"github.com/otiai10/gosseract"
 )
