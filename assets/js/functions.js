@@ -7,6 +7,19 @@ $(window).on('load', function () {
 
 $(document).ready(function () {
 
+    $('#minio-data').dataTable( {
+        "ajax": {
+            "url": '/search',
+            "dataSrc": ""
+        },
+       "columns": [
+            { "data": "Key" },
+            { "data": "Value" },
+            { "data": "Parsed"},
+            { "data": "Metadata"}
+        ]
+    });
+
     //Dropzone
     if($('.dropzone')[0]) {
         $('.dropzone').dropzone({
@@ -73,7 +86,6 @@ $(document).ready(function () {
         $('.debug').removeClass('debug--active');
     });
 
-    
 
 });
 

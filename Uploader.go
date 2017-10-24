@@ -10,7 +10,9 @@ import (
 	"path"
 	"time"
 
+	"github.com/jmoiron/sqlx"
 	"github.com/lib/pq"
+	_ "github.com/lib/pq"
 	"github.com/minio/minio-go"
 )
 
@@ -22,13 +24,22 @@ type Output struct {
 	Metadata string
 }
 
+// This is the const that holds tricord postgres connection info.
+const (
+	DBUSER     = "postgres"
+	DBPASSWORD = "postgres"
+	DBNAME     = "minio_events"
+)
+
 var output = Output{}
+var globalPDB *sqlx.DB
 
 func main() {
 	setUp()
 	http.HandleFunc("/", foo)
 	http.HandleFunc("/results", bar)
 	http.HandleFunc("/upload", upload)
+	http.HandleFunc("/search", searchMetaData)
 	http.Handle("/assets/", http.StripPrefix("/assets/", http.FileServer(http.Dir("assets"))))
 	go pgHook()
 	http.ListenAndServe(":3000", nil)
@@ -58,7 +69,20 @@ func pgHook() {
 		waitForNotification(minioClient, listener)
 	}
 }
+
+func initDB() {
+	dbinfo := fmt.Sprintf("user=%s password=%s dbname=%s sslmode=verify-ca host=localhost", DBUSER, DBPASSWORD, DBNAME)
+	pdb, err := sqlx.Connect("postgres", dbinfo)
+	if err != nil {
+		log.Fatal(err)
+	}
+
+	// Set new postgres instance.
+	globalPDB = pdb
+}
+
 func setUp() {
+	initDB()
 	minioClient, err := minio.New("192.168.1.118:9000", "minio", "minio123", false)
 	if err != nil {
 		log.Fatalln(err)
@@ -119,4 +143,41 @@ func upload(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 	fmt.Printf("Successfully put object %d\n", n)
+}
+
+func searchMetaData(w http.ResponseWriter, req *http.Request) {
+
+	mdt := []Output{}
+
+	var keyTemp, valueTemp string
+	var err error
+
+	rows, err := globalPDB.Queryx(`select * from bucketmetadata`)
+
+	if err != nil {
+
+		return
+	}
+	for rows.Next() {
+		err = rows.Scan(&keyTemp, &valueTemp)
+		if err != nil {
+			fmt.Println("minioTable query scan error:", err)
+			continue
+		}
+		//construct & populate a MinioDataTable struct instance.
+		mymdt := Output{
+			keyTemp,
+			valueTemp,
+			"n/a",
+			"n/a",
+		}
+		mdt = append(mdt, mymdt)
+	}
+	js, err := json.Marshal(mdt)
+	if err != nil {
+		fmt.Println("Unable to marshall data:", err)
+		return
+	}
+	w.Header().Set("Content-Type", "application/json")
+	w.Write(js)
 }
