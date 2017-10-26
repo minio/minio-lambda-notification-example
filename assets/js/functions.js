@@ -7,6 +7,7 @@ $(window).on('load', function () {
 
 $(document).ready(function () {
 
+    showSERP();
     $('#minio-data').dataTable( {
         "ajax": {
             "url": '/search',
@@ -24,6 +25,7 @@ $(document).ready(function () {
     var oTable = $('#minio-data').DataTable();
     $('#search-inp').on('keyup',function(){
         oTable.search($(this).val()).draw();
+        showSERP();
     });
     //Dropzone
     if($('.dropzone')[0]) {
@@ -89,3 +91,12 @@ $(document).ready(function () {
     });
 });
 
+//function that shows the search results page.
+function showSERP() {
+    var x = document.getElementById("minio-data");
+    if (x.style.display === "none") {
+        x.style.display = "inline";
+    } else {
+        x.style.display = "none";
+    }
+}
